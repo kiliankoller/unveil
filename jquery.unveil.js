@@ -10,7 +10,7 @@
 
 ;(function($) {
 
-  $.fn.unveil = function(threshold, callback) {
+  $.fn.unveil_nosrc = function(threshold, callback) {
 
     var $w = $(window),
         th = threshold || 0,
@@ -19,16 +19,17 @@
         images = this,
         loaded;
 
-    this.one("unveil", function() {
+    this.one("unveil_nosrc", function() {
       var source = this.getAttribute(attrib);
       source = source || this.getAttribute("data-src");
       if (source) {
-        this.setAttribute("src", source);
+        // Do not set source here, only use event to call cloudinary_update
+        //this.setAttribute("src", source);
         if (typeof callback === "function") callback.call(this);
       }
     });
 
-    function unveil() {
+    function unveil_nosrc() {
       var inview = images.filter(function() {
         var $e = $(this);
         if ($e.is(":hidden")) return;
@@ -41,13 +42,13 @@
         return eb >= wt - th && et <= wb + th;
       });
 
-      loaded = inview.trigger("unveil");
+      loaded = inview.trigger("unveil_nosrc");
       images = images.not(loaded);
     }
 
-    $w.on("scroll.unveil resize.unveil lookup.unveil", unveil);
+    $w.on("scroll.unveil_nosrc resize.unveil_nosrc lookup.unveil_nosrc", unveil_nosrc);
 
-    unveil();
+    unveil_nosrc();
 
     return this;
 
