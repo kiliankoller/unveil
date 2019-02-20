@@ -1,0 +1,19 @@
+{
+  "name": "unveil_nosrc",
+  "version": "1.3.0",
+  "description": "Fork of https://github.com/luis-almeida/unveil/blob/master/bower.json",
+  "main": "jquery.unveil_nosrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiliankoller/unveil_nosrc.git"
+  },
+  "author": "Kilian Koller",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kiliankoller/unveil_nosrc/issues"
+  },
+  "homepage": "https://github.com/kiliankoller/unveil_nosrc#readme"
+}
