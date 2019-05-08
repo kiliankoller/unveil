@@ -33,8 +33,7 @@
         function unveil_nosrc() {
             var inview = images.filter(function() {
                 var $e = $(this);
-                // Also preload hidden images, use visibility : hidden instead of display: none;
-                //if ($e.is(":hidden")) return;
+                if ($e.is(":hidden")) return;
 
                 var wt = $w.scrollTop(),
                     wb = wt + $w.height(),
