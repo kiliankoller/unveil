@@ -8,50 +8,52 @@
  * https://github.com/luis-almeida
  */
 
-;(function($) {
+;
+(function($) {
 
-  $.fn.unveil_nosrc = function(threshold, callback) {
+    $.fn.unveil_nosrc = function(threshold, callback) {
 
-    var $w = $(window),
-        th = threshold || 0,
-        retina = window.devicePixelRatio > 1,
-        attrib = retina? "data-src-retina" : "data-src",
-        images = this,
-        loaded;
+        var $w = $(window),
+            th = threshold || 0,
+            retina = window.devicePixelRatio > 1,
+            attrib = retina ? "data-src-retina" : "data-src",
+            images = this,
+            loaded;
 
-    this.one("unveil_nosrc", function() {
-      var source = this.getAttribute(attrib);
-      source = source || this.getAttribute("data-src");
-      if (source) {
-        // Do not set source here, only use event to call cloudinary_update
-        //this.setAttribute("src", source);
-        if (typeof callback === "function") callback.call(this);
-      }
-    });
+        this.one("unveil_nosrc", function() {
+            var source = this.getAttribute(attrib);
+            source = source || this.getAttribute("data-src");
+            if (source) {
+                // Do not set source here, only use event to call cloudinary_update
+                //this.setAttribute("src", source);
+                if (typeof callback === "function") callback.call(this);
+            }
+        });
 
-    function unveil_nosrc() {
-      var inview = images.filter(function() {
-        var $e = $(this);
-        if ($e.is(":hidden")) return;
+        function unveil_nosrc() {
+            var inview = images.filter(function() {
+                var $e = $(this);
+                // Also preload hidden images, use visibility : hidden instead of display: none;
+                //if ($e.is(":hidden")) return;
 
-        var wt = $w.scrollTop(),
-            wb = wt + $w.height(),
-            et = $e.offset().top,
-            eb = et + $e.height();
+                var wt = $w.scrollTop(),
+                    wb = wt + $w.height(),
+                    et = $e.offset().top,
+                    eb = et + $e.height();
 
-        return eb >= wt - th && et <= wb + th;
-      });
+                return eb >= wt - th && et <= wb + th;
+            });
 
-      loaded = inview.trigger("unveil_nosrc");
-      images = images.not(loaded);
-    }
+            loaded = inview.trigger("unveil_nosrc");
+            images = images.not(loaded);
+        }
 
-    $w.on("scroll.unveil_nosrc resize.unveil_nosrc lookup.unveil_nosrc", unveil_nosrc);
+        $w.on("scroll.unveil_nosrc resize.unveil_nosrc lookup.unveil_nosrc", unveil_nosrc);
 
-    unveil_nosrc();
+        unveil_nosrc();
 
-    return this;
+        return this;
 
-  };
+    };
 
 })(window.jQuery || window.Zepto);
